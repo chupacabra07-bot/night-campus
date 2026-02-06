@@ -42,11 +42,21 @@ export default function MatchDetailsPage() {
         }
     };
 
-    if (loading) return null;
+    const [userRole, setUserRole] = useState<'user1' | 'user2' | null>(null);
+    const [hasIAgreed, setHasIAgreed] = useState(false);
 
-    const isMeAgreed = match.user1_agreed || match.user2_agreed; // Simplified check if the *current* user agreed is handled correctly by the backend logic, here we just need to know if the button should be shown
-    const userRole = match.user1?.id === JSON.parse(localStorage.getItem('user') || '{}').id ? 'user1' : 'user2';
-    const hasIAgreed = userRole === 'user1' ? match.user1_agreed : match.user2_agreed;
+    useEffect(() => {
+        if (!match) return;
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            const currentUser = JSON.parse(savedUser);
+            const role = match.user1?.id === currentUser.id ? 'user1' : 'user2';
+            setUserRole(role);
+            setHasIAgreed(role === 'user1' ? match.user1_agreed : match.user2_agreed);
+        }
+    }, [match]);
+
+    if (loading || !match || !userRole) return null;
 
     return (
         <AppWrapper>

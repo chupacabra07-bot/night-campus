@@ -132,6 +132,8 @@ export default function OnboardingPage() {
     const [hoveredVibe, setHoveredVibe] = useState<string | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
 
+    const [isGeneratingNickname, setIsGeneratingNickname] = useState(false);
+
     const showSarcasticToast = (type: 'energy' | 'brain' | 'intent') => {
         const list = type === 'energy' ? SARCASTIC_TOASTS : type === 'brain' ? BRAIN_SARCASTIC_TOASTS : INTENT_SARCASTIC_TOASTS;
         const randomToast = list[Math.floor(Math.random() * list.length)];
@@ -182,11 +184,19 @@ export default function OnboardingPage() {
     };
 
     const generateNickname = async () => {
+        setIsGeneratingNickname(true);
         try {
             const res = await api.get("/auth/generate_nickname/");
             setFormData({ ...formData, nickname: res.data.nickname });
         } catch (err) {
             console.error(err);
+            setToast({
+                message: "System jammed. Your identity is a mystery for now.",
+                visible: true
+            });
+            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000);
+        } finally {
+            setIsGeneratingNickname(false);
         }
     };
 
@@ -194,15 +204,15 @@ export default function OnboardingPage() {
         <main className="min-h-screen bg-campus-dark text-white p-6 relative overflow-hidden flex flex-col">
             {/* Progress Header */}
             {!showSuccess && (
-                <header className="max-w-md mx-auto w-full pt-12 mb-12">
-                    <div className="flex justify-between items-center mb-6">
+                <header className="max-w-md mx-auto w-full pt-4 md:pt-12 mb-6 md:mb-12">
+                    <div className="flex justify-between items-center mb-4 md:mb-6">
                         {STEPS.map((s, i) => (
-                            <div key={s.id} className="flex flex-col items-center gap-2">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${i <= currentStep ? "bg-campus-accent text-campus-dark" : "bg-white/5 text-campus-secondary/40"
+                            <div key={s.id} className="flex flex-col items-center gap-1 md:gap-2">
+                                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all ${i <= currentStep ? "bg-campus-accent text-campus-dark" : "bg-white/5 text-campus-secondary/40"
                                     }`}>
-                                    <s.icon className="w-5 h-5" />
+                                    <s.icon className="w-4 h-4 md:w-5 md:h-5" />
                                 </div>
-                                <span className={`text-[8px] font-bold uppercase tracking-widest ${i <= currentStep ? "text-campus-accent" : "text-campus-secondary/20"
+                                <span className={`text-[7px] md:text-[8px] font-bold uppercase tracking-widest ${i <= currentStep ? "text-campus-accent" : "text-campus-secondary/20"
                                     }`}>{s.label}</span>
                             </div>
                         ))}
@@ -223,11 +233,11 @@ export default function OnboardingPage() {
                         <motion.div
                             key="identity"
                             initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-                            className="w-full space-y-8 max-w-md mx-auto"
+                            className="w-full space-y-4 md:space-y-8 max-w-md mx-auto"
                         >
                             <div className="text-center">
-                                <h1 className="text-4xl font-black mb-4">Choose Your Disguise</h1>
-                                <p className="text-campus-secondary/60 text-sm">No real face. Just pure vibe.</p>
+                                <h1 className="text-2xl md:text-4xl font-black mb-2 md:mb-4">Choose Your Disguise</h1>
+                                <p className="text-campus-secondary/60 text-xs md:text-sm">No real face. Just pure vibe.</p>
                             </div>
 
                             <div className="space-y-4">
@@ -235,20 +245,21 @@ export default function OnboardingPage() {
                                     <input
                                         type="text"
                                         readOnly
-                                        placeholder="Generating your alias..."
-                                        className="w-full bg-white/5 border border-white/5 rounded-3xl py-6 px-8 text-xl font-bold focus:outline-none focus:border-campus-accent/50 transition-all text-center text-campus-accent cursor-not-allowed uppercase tracking-wider"
+                                        placeholder={isGeneratingNickname ? "Consulting the vibe council..." : "Generating your alias..."}
+                                        className={`w-full bg-white/5 border border-white/5 rounded-3xl py-6 px-8 text-xl font-bold focus:outline-none focus:border-campus-accent/50 transition-all text-center text-campus-accent cursor-not-allowed uppercase tracking-wider ${isGeneratingNickname ? 'animate-pulse opacity-50' : ''}`}
                                         value={formData.nickname}
                                     />
                                     <button
                                         onClick={generateNickname}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-campus-accent/10 rounded-2xl hover:bg-campus-accent/20 transition-all group/btn"
+                                        disabled={isGeneratingNickname}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-campus-accent/10 rounded-2xl hover:bg-campus-accent/20 transition-all group/btn disabled:opacity-50 disabled:cursor-not-allowed"
                                         title="Try Another"
                                     >
-                                        <RefreshCw className="w-5 h-5 text-campus-accent group-hover/btn:rotate-180 transition-transform duration-500" />
+                                        <RefreshCw className={`w-5 h-5 text-campus-accent transition-transform duration-500 ${isGeneratingNickname ? 'animate-spin' : 'group-hover/btn:rotate-180'}`} />
                                     </button>
                                 </div>
                                 <p className="text-center text-[10px] font-bold uppercase tracking-widest text-campus-secondary/40">
-                                    System determined ID. Tap to regenerate.
+                                    {isGeneratingNickname ? "Finding the perfect label..." : "System determined ID. Tap to regenerate."}
                                 </p>
 
                                 <div className="space-y-6">

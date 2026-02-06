@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "The late-night social lore for RGUKT RK Valley students.",
 };
 
+import { Providers } from "@/components/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,12 +31,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${comfortaa.variable} font-inter antialiased bg-campus-dark text-white selection:bg-campus-accent/30`}
       >
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+        <Providers>
           <div className="relative z-0 min-h-screen">
             <LogoutButton />
             {children}
           </div>
-        </GoogleOAuthProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -53,17 +53,17 @@ export const AvatarBuilder = ({ onSave, onClose, initialConfig }: AvatarBuilderP
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-campus-dark/95 backdrop-blur-xl flex flex-col md:flex-row"
+            className="fixed inset-0 z-[200] bg-campus-dark/95 backdrop-blur-xl flex flex-col md:flex-row h-full overflow-hidden"
         >
             <button
                 onClick={onClose}
-                className="absolute top-8 right-8 p-2 text-white/40 hover:text-white z-10"
+                className="absolute top-4 right-4 md:top-8 md:right-8 p-2 text-white/40 hover:text-white z-50 bg-campus-dark/80 rounded-full backdrop-blur-md"
             >
-                <X className="w-8 h-8" />
+                <X className="w-6 h-6 md:w-8 md:h-8" />
             </button>
 
-            {/* Preview Area */}
-            <div className="flex-1 flex flex-col items-center justify-center p-12 border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
+            {/* Preview Area - Sticky on Mobile */}
+            <div className="flex-[0.6] md:flex-1 flex flex-col items-center justify-center p-6 md:p-12 border-b md:border-b-0 md:border-r border-white/5 relative shrink-0">
                 {/* Vignette/Glow Background */}
                 <div className="absolute inset-0 bg-radial-vignette pointer-events-none opacity-50" />
 
@@ -74,28 +74,28 @@ export const AvatarBuilder = ({ onSave, onClose, initialConfig }: AvatarBuilderP
                     } : {}}
                     className="relative group z-10"
                 >
-                    <Avatar config={config} className="w-72 h-72 md:w-[400px] md:h-[400px]" />
-                    <div className="absolute inset-0 bg-campus-accent/20 blur-[120px] -z-10 animate-pulse" />
+                    <Avatar config={config} className="w-48 h-48 sm:w-64 sm:h-64 md:w-[400px] md:h-[400px]" />
+                    <div className="absolute inset-0 bg-campus-accent/20 blur-[80px] md:blur-[120px] -z-10 animate-pulse" />
                 </motion.div>
 
-                <div className="mt-12 text-center z-10">
-                    <h2 className="text-4xl font-black tracking-tighter text-white mb-2">Build Your Identity</h2>
-                    <p className="text-campus-secondary/60 text-sm font-bold uppercase tracking-[0.2em]">No real face, all real vibes.</p>
+                <div className="mt-6 md:mt-12 text-center z-10 hidden sm:block">
+                    <h2 className="text-2xl md:text-4xl font-black tracking-tighter text-white mb-2">Build Your Identity</h2>
+                    <p className="text-campus-secondary/60 text-[10px] md:text-sm font-bold uppercase tracking-[0.2em]">No real face, all real vibes.</p>
                 </div>
 
                 <button
                     onClick={randomize}
                     disabled={isShuffling}
-                    className="mt-12 flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-campus-accent font-black transition-all text-sm uppercase tracking-widest border border-white/5"
+                    className="mt-6 md:mt-12 flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-campus-accent font-black transition-all text-[10px] md:text-sm uppercase tracking-widest border border-white/5 z-10"
                 >
-                    <RefreshCw className={`w-4 h-4 ${isShuffling ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-3 h-3 md:w-4 md:h-4 ${isShuffling ? 'animate-spin' : ''}`} />
                     Surprise Me
                 </button>
             </div>
 
             {/* Editor Area */}
-            <div className="w-full md:w-[480px] flex flex-col h-full bg-white/[0.01] backdrop-blur-sm">
-                <div className="flex-1 p-8 overflow-y-auto space-y-12 hide-scrollbar">
+            <div className="flex-1 flex flex-col h-full bg-white/[0.01] backdrop-blur-sm overflow-hidden min-h-0">
+                <div className="flex-1 p-6 md:p-8 overflow-y-auto space-y-8 md:space-y-12 hide-scrollbar pb-32 md:pb-8">
                     {/* Color Picker */}
                     <section className="space-y-4">
                         <div className="flex items-center gap-2">
@@ -107,12 +107,12 @@ export const AvatarBuilder = ({ onSave, onClose, initialConfig }: AvatarBuilderP
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-3 md:gap-4">
                             {COLORS.map(c => (
                                 <button
                                     key={c}
                                     onClick={() => setConfig({ ...config, color: c })}
-                                    className={`w-12 h-12 rounded-full border-4 transition-all shadow-xl ${config.color === c ? "border-campus-accent scale-110 shadow-campus-accent/20" : "border-transparent opacity-40 hover:opacity-100"}`}
+                                    className={`w-10 h-10 md:w-12 md:h-12 rounded-full border-2 md:border-4 transition-all shadow-xl ${config.color === c ? "border-campus-accent scale-110 shadow-campus-accent/20" : "border-transparent opacity-40 hover:opacity-100"}`}
                                     style={{ backgroundColor: c }}
                                 />
                             ))}
@@ -122,12 +122,12 @@ export const AvatarBuilder = ({ onSave, onClose, initialConfig }: AvatarBuilderP
                     {CATEGORIES.map(cat => (
                         <section key={cat.id} className="space-y-4">
                             <label className="text-[10px] font-black uppercase tracking-[0.3em] text-campus-secondary">{cat.label}</label>
-                            <div className="grid grid-cols-3 gap-3">
+                            <div className="grid grid-cols-2 xs:grid-cols-3 gap-2 md:grid-cols-3 md:gap-3">
                                 {cat.options.map(opt => (
                                     <button
                                         key={opt}
                                         onClick={() => setConfig({ ...config, [cat.id]: opt })}
-                                        className={`p-4 rounded-2xl border transition-all text-[10px] font-bold uppercase tracking-widest ${config[cat.id as keyof typeof config] === opt
+                                        className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all text-[9px] md:text-[10px] font-bold uppercase tracking-widest ${config[cat.id as keyof typeof config] === opt
                                             ? "bg-campus-accent/20 border-campus-accent/40 text-campus-accent"
                                             : "bg-white/5 border-white/5 text-white/40 hover:text-white"
                                             }`}
@@ -140,15 +140,15 @@ export const AvatarBuilder = ({ onSave, onClose, initialConfig }: AvatarBuilderP
                     ))}
                 </div>
 
-                <div className="p-8 border-t border-white/5 bg-campus-dark/50">
-                    <p className="text-center text-[10px] font-bold uppercase tracking-widest text-campus-secondary/40 mb-4">
+                <div className="p-6 md:p-8 border-t border-white/5 bg-campus-dark/80 md:bg-campus-dark/50 absolute bottom-0 left-0 right-0 md:relative">
+                    <p className="hidden md:block text-center text-[10px] font-bold uppercase tracking-widest text-campus-secondary/40 mb-4">
                         This is how others see you tonight.
                     </p>
                     <button
                         onClick={() => onSave(config)}
-                        className="w-full bg-campus-accent text-campus-dark py-5 rounded-3xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-campus-accent/20 hover:scale-[1.02] active:scale-95 transition-all text-lg flex items-center justify-center gap-3"
+                        className="w-full bg-campus-accent text-campus-dark py-4 md:py-5 rounded-2xl md:rounded-3xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-campus-accent/20 hover:scale-[1.02] active:scale-95 transition-all text-sm md:text-lg flex items-center justify-center gap-3"
                     >
-                        <Check className="w-6 h-6" />
+                        <Check className="w-5 h-5 md:w-6 md:h-6" />
                         Save Identity
                     </button>
                 </div>
