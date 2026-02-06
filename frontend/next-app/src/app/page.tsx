@@ -48,7 +48,7 @@ export default function Home() {
             <span className="font-black text-xl tracking-tighter">NIGHT CAMPUS</span>
           </div>
           <Link href="/login"
-            className="btn-gold">
+            className="btn-gold hidden sm:block">
             Login
           </Link>
         </div>

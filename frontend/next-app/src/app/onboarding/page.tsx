@@ -145,6 +145,19 @@ export default function OnboardingPage() {
         if (!formData.nickname) {
             generateNickname();
         }
+
+        // Safety backup: if after 4 seconds it's still empty, force a fallback
+        const backupTimer = setTimeout(() => {
+            setFormData(prev => {
+                if (!prev.nickname && !isGeneratingNickname) {
+                    const localFallbacks = ["Night Owl", "Shadow Ghost", "Moon Light"];
+                    return { ...prev, nickname: localFallbacks[Math.floor(Math.random() * localFallbacks.length)] };
+                }
+                return prev;
+            });
+        }, 4000);
+
+        return () => clearTimeout(backupTimer);
     }, []);
 
     const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
