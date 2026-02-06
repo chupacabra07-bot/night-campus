@@ -27,11 +27,29 @@ class GoogleLogin(APIView):
         
         try:
             # Verify the Google ID token
-            idinfo = id_token.verify_oauth2_token(
-                token, 
-                google_requests.Request(), 
-                '482173332213-f7jpvem0soc2dgobvajsev1t0okk1avl.apps.googleusercontent.com'
-            )
+            # Accept multiple client IDs (localhost + Vercel)
+            ALLOWED_CLIENT_IDS = [
+                '482173332213-f7jpvem0soc2dgobvajsev1t0okk1avl.apps.googleusercontent.com',  # Original (localhost)
+                '482173332213-69fdrbrg42vduu7j80k0q5cguldjg5uk.apps.googleusercontent.com',  # Vercel (Corrected based on error)
+            ]
+            
+            idinfo = None
+            verification_errors = []
+            for client_id in ALLOWED_CLIENT_IDS:
+                try:
+                    idinfo = id_token.verify_oauth2_token(
+                        token, 
+                        google_requests.Request(), 
+                        client_id
+                    )
+                    break
+                except ValueError as e:
+                    verification_errors.append(str(e))
+                    continue
+            
+            if not idinfo:
+                print(f"Auth DEBUG: Verification failed. Errors: {verification_errors}")
+                return Response({'error': f'Invalid token: Could not verify with any client ID. Last error: {verification_errors[-1] if verification_errors else "Unknown"}'}, status=status.HTTP_400_BAD_REQUEST)
             
             # Extract user info
             email = idinfo.get('email')
