@@ -1,0 +1,39 @@
+﻿.venv\Scripts\python.e
+xe : 
+SystemCheckError: 
+System check 
+identified some 
+issues:
+At line:1 char:1
++ .venv\Scripts\python
+.exe manage.py 
+makemigrations 2>&1 | 
+Out-File -Fi ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (SystemChec   
+ kErro...ed some i    
+ssues::String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+
+ERRORS:
+<class 'accounts.admin
+.ProfileAdmin'>: 
+(admin.E108) The 
+value of 
+'list_display[3]' 
+refers to 
+'trust_score', which 
+is not a callable or 
+attribute of 
+'ProfileAdmin', or an 
+attribute, method, or 
+field on 
+'accounts.Profile'.

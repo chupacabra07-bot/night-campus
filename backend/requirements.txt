@@ -1,0 +1,12 @@
+Django>=6.0.0
+djangorestframework
+django-cors-headers
+djangorestframework-simplejwt
+channels[daphne]
+channels-redis
+Pillow
+django-filter
+django-simple-history
+django-jazzmin
+pyjwt
+uuid

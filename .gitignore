@@ -1,0 +1,56 @@
+# Python
+*.py[cod]
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+env/
+venv/
+.venv/
+*.sqlite3
+db.sqlite3
+
+# Django
+*.log
+local_settings.py
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel
+
+# Ngrok
+ngrok.yml
+*.bat
+
+# Misc
+*.bak
+*.tmp
+check_stats.py
+check_status.py

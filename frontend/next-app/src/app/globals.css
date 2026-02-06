@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+/* 
+  Tailwind v4 @theme rule - Antigravity Color System
+  Deep indigo-black palette for proper floating illusion
+*/
+@theme {
+  /* Base - Deep indigo-black void */
+  --color-campus-dark: #0B0D17;
+
+  /* Surface - Slightly lighter with violet undertone */
+  --color-campus-card: #14172A;
+
+  /* Primary accent - Electric violet (single accent) */
+  --color-campus-accent: #7C7CFF;
+
+  /* Glow - Same accent, desaturated for soft halos */
+  --color-campus-glow: rgba(124, 124, 255, 0.15);
+
+  /* Text hierarchy - Off-white with cool tint */
+  --color-campus-text-primary: #EDEFFF;
+  --color-campus-text-secondary: #A9ADC9;
+  --color-campus-text-meta: rgba(169, 173, 201, 0.5);
+
+  /* Legacy highlight (kept for gold buttons) */
+  --color-campus-highlight: #FFE8A3;
+
+  /* Deprecated - keeping for backward compatibility */
+  --color-campus-secondary: #A9ADC9;
+
+  --background-image-radial-vignette: radial-gradient(circle, transparent 20%, rgba(11, 13, 23, 0.8) 100%);
+
+  --font-heading: var(--font-comfortaa);
+  --font-body: var(--font-inter);
+}
+
+:root {
+  --background: #14121E;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* ========================================
+   ANTIGRAVITY UI SYSTEM
+   ======================================== */
+
+/* Soft ambient glow for text */
+.glow-accent {
+  text-shadow: 0 0 24px rgba(124, 124, 255, 0.2), 0 0 8px rgba(124, 124, 255, 0.12);
+}
+
+/* Floating glass card - suspended, not grounded */
+.glass-card {
+  background: rgba(20, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(124, 124, 255, 0.08);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(237, 239, 255, 0.02),
+    0 0 48px rgba(124, 124, 255, 0.06);
+  animation: antigravity-float 8s ease-in-out infinite;
+}
+
+@keyframes antigravity-float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Breathing glow for focused elements */
+@keyframes antigravity-breathe {
+
+  0%,
+  100% {
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 48px rgba(124, 124, 255, 0.06);
+  }
+
+  50% {
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 64px rgba(124, 124, 255, 0.12);
+  }
+}
+
+.glass-card-breathe {
+  animation: antigravity-float 8s ease-in-out infinite, antigravity-breathe 6s ease-in-out infinite;
+}
+
+/* Hover state - gentle lift and separation */
+.antigravity-lift {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.antigravity-lift:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 64px rgba(124, 124, 255, 0.15);
+}
+
+/* Buttons - suspended, not pressed */
+.btn-antigravity {
+  @apply relative overflow-hidden px-6 py-3 rounded-2xl font-bold uppercase tracking-wider text-xs transition-all duration-500;
+  background: rgba(124, 124, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(124, 124, 255, 0.15);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(124, 124, 255, 0.06),
+    inset 0 1px 0 rgba(237, 239, 255, 0.05);
+}
+
+.btn-antigravity:hover {
+  transform: translateY(-2px);
+  background: rgba(124, 124, 255, 0.12);
+  border-color: rgba(124, 124, 255, 0.25);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(124, 124, 255, 0.15);
+}
+
+.btn-antigravity:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
+}
+
+/* Premium Gold Button - refined for antigravity */
+.btn-gold {
+  @apply relative overflow-hidden px-8 py-2.5 rounded-xl font-black uppercase tracking-widest text-[11px] text-[#2D2400] transition-all duration-500;
+  background: linear-gradient(135deg, #FFD700 0%, #FFC300 50%, #FFB000 100%);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.25),
+    0 0 32px rgba(255, 195, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(184, 134, 11, 0.2);
+}
+
+.btn-gold::before {
+  content: '';
+  @apply absolute top-0 left-[-100%] w-full h-[50%] bg-white/25 skew-x-[-35deg] transition-all duration-700;
+  pointer-events: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 32px rgba(255, 195, 0, 0.15),
+    0 0 48px rgba(255, 195, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-gold:hover::before {
+  @apply left-[150%];
+}
+
+.btn-gold:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
+}
+
+/* Input fields - floating, not embedded */
+.input-antigravity {
+  @apply w-full bg-white/5 border border-white/5 rounded-2xl py-4 px-6 text-sm transition-all duration-500;
+  color: var(--color-campus-text-primary);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(237, 239, 255, 0.03);
+}
+
+.input-antigravity:focus {
+  outline: none;
+  background: rgba(237, 239, 255, 0.08);
+  border-color: rgba(124, 124, 255, 0.3);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.3),
+    0 0 32px rgba(124, 124, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Reduce motion for accessibility and mobile */
+@media (prefers-reduced-motion: reduce) {
+
+  .glass-card,
+  .glass-card-breathe,
+  .antigravity-lift,
+  .btn-antigravity,
+  .btn-gold,
+  .input-antigravity {
+    animation: none !important;
+    transition-duration: 0.15s !important;
+  }
+}
+
+/* Mobile optimization - reduce drift amplitude */
+@media (max-width: 768px) {
+  @keyframes antigravity-float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-1px);
+    }
+  }
+
+  .antigravity-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-antigravity:hover,
+  .btn-gold:hover {
+    transform: translateY(-1.5px);
+  }
+}
