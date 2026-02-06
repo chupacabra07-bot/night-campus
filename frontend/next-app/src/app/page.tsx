@@ -86,12 +86,19 @@ export default function Home() {
               if (token) router.push('/home');
               else router.push('/signup');
             }}
-            className="px-10 py-5 bg-gradient-to-r from-campus-accent to-campus-accent/80 text-campus-dark font-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-campus-accent/20 text-lg">
+            className="px-10 py-5 bg-gradient-to-r from-campus-accent to-campus-accent/80 text-campus-dark font-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-campus-accent/20 text-xl flex-1 sm:flex-none">
             Enter the Night
           </button>
+
+          <button
+            onClick={() => router.push('/login')}
+            className="px-10 py-5 bg-campus-highlight text-campus-dark font-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-campus-highlight/20 text-xl sm:hidden">
+            Login
+          </button>
+
           <button
             onClick={() => setShowLore(true)}
-            className="px-10 py-5 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold rounded-2xl transition-all backdrop-blur-lg text-lg">
+            className="px-10 py-5 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold rounded-2xl transition-all backdrop-blur-lg text-xl flex-1 sm:flex-none">
             Read the Lore
           </button>
         </div>

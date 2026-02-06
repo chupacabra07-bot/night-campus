@@ -187,11 +187,16 @@ export default function OnboardingPage() {
         setIsGeneratingNickname(true);
         try {
             const res = await api.get("/auth/generate_nickname/");
-            setFormData({ ...formData, nickname: res.data.nickname });
+            setFormData(prev => ({ ...prev, nickname: res.data.nickname }));
         } catch (err) {
-            console.error(err);
+            console.error("Nickname generation failed:", err);
+            // Fallback nicknames in case the API is unreachable (e.g. initial setup/mobile issues)
+            const fallbacks = ["Anonymous Ghost", "Shadow Walker", "Night Vibe", "Campus Legend", "Silent Echo"];
+            const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            setFormData(prev => ({ ...prev, nickname: randomFallback }));
+
             setToast({
-                message: "System jammed. Your identity is a mystery for now.",
+                message: "Connected to local vibes (using fallback ID).",
                 visible: true
             });
             setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000);
@@ -289,7 +294,10 @@ export default function OnboardingPage() {
                                         {["👻", "🧛", "🐺", "🌙"].map(e => (
                                             <button
                                                 key={e}
-                                                onClick={() => setFormData({ ...formData, avatar_emoji: e, avatar_config: null })}
+                                                onClick={() => {
+                                                    setFormData(prev => ({ ...prev, avatar_emoji: e, avatar_config: null }));
+                                                    setAvatarTouched(true);
+                                                }}
                                                 className={`text-2xl p-4 rounded-2xl transition-all ${formData.avatar_emoji === e && !formData.avatar_config ? "bg-campus-accent/20 scale-110 border border-campus-accent/30" : "bg-white/5 grayscale"
                                                     }`}
                                             >
@@ -801,7 +809,7 @@ export default function OnboardingPage() {
                     )}
                     <button
                         disabled={
-                            (currentStep === 0 && (!formData.nickname || !avatarTouched)) ||
+                            (currentStep === 0 && (!formData.nickname || (!avatarTouched && !formData.avatar_emoji))) ||
                             (currentStep === 1 && !formData.gender) ||
                             (currentStep === 2 && formData.social_energy.length !== 4) ||
                             (currentStep === 3 && !formData.brain_type) ||
@@ -812,14 +820,14 @@ export default function OnboardingPage() {
                             if (currentStep === 5) setShowSuccess(true);
                             else nextStep();
                         }}
-                        className={`flex-[2] py-5 rounded-2xl font-black uppercase tracking-widest transition-all disabled:opacity-20 ${(currentStep === 0 && formData.nickname && avatarTouched) ||
+                        className={`flex-[2] py-5 rounded-2xl font-black uppercase tracking-widest transition-all disabled:opacity-20 ${(currentStep === 0 && formData.nickname && (avatarTouched || formData.avatar_emoji)) ||
                             (currentStep === 1 && formData.gender) ||
                             (currentStep === 2 && formData.social_energy.length === 4) ||
                             (currentStep === 3 && formData.brain_type) ||
                             (currentStep === 4 && formData.interests.length > 0) ||
                             (currentStep === 5 && formData.connection_intent.length > 0)
                             ? "bg-campus-accent text-campus-dark shadow-[0_0_20px_rgba(198,183,255,0.3)] scale-[1.02]"
-                            : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
+                            : "bg-white/5 border border-white/10 text-white"
                             }`}
                     >
                         {currentStep === 0 ? "Enter in Disguise 🕶️" :

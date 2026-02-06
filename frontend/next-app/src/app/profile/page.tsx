@@ -652,6 +652,21 @@ export default function ProfilePage() {
                             <p className="text-[10px] font-bold uppercase tracking-widest text-campus-secondary text-center">More features materializing soon...</p>
                         </div>
 
+                        {/* Logout Button */}
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                localStorage.removeItem("user");
+                                window.location.href = "/";
+                            }}
+                            className="flex flex-col items-center gap-2 group p-4 border border-white/5 bg-white/5 rounded-[2rem] hover:bg-white/10 transition-all w-full max-w-[200px]"
+                        >
+                            <div className="p-3 bg-white/10 rounded-2xl group-hover:scale-110 transition-all">
+                                <DoorOpen className="w-6 h-6 text-campus-secondary" />
+                            </div>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-campus-secondary">Drop the Disguise</span>
+                        </button>
+
                         {/* Delete Account Button */}
                         <button
                             onClick={() => setShowDeleteModal(true)}

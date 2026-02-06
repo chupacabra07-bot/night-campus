@@ -75,9 +75,9 @@ export function LogoutButton() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={handleClick}
-            className={`fixed top-6 right-6 z-[100] flex items-center gap-3 px-5 py-3 backdrop-blur-md border rounded-2xl transition-all duration-300 shadow-2xl group ${showLogoutText
-                    ? "bg-rose-500/10 border-rose-500/40 text-rose-500"
-                    : "bg-white/5 border-white/10 text-campus-secondary/80"
+            className={`fixed top-6 right-6 z-[100] hidden md:flex items-center gap-3 px-5 py-3 backdrop-blur-md border rounded-2xl transition-all duration-300 shadow-2xl group ${showLogoutText
+                ? "bg-rose-500/10 border-rose-500/40 text-rose-500"
+                : "bg-white/5 border-white/10 text-campus-secondary/80"
                 }`}
         >
             <div className="overflow-hidden flex items-center">
