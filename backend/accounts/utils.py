@@ -6,22 +6,15 @@ from datetime import timedelta
 def generate_thematic_nickname():
     """Generate a system-controlled Telugu snack username with a random number."""
     snacks = [
-        "Punugu", "Mirchi", "Garelu", "Majjiga", "Bobbatlu", "Sakinala", "Chekkalu", "Laddu", 
-        "Jonna", "Pappu", "Pulihora", "Dosa", "Idli", "Vada", "Chai", "Biryani", "Rasam", 
-        "Jilebi", "Mysore", "Karam", "Pakodi", "Murukku", "Boorelu", "Ariselu", "Sunnundalu", 
-        "Kobbari", "Panasa", "Bellam", "Gongura", "Avakai", "Sambar", "Upma", "Pongal", 
-        "Payasam", "Badusha", "Halwa", "Lassi", "Buttermilk", "Falooda", "Bonda", "Cutlet", 
-        "Chikki", "Mango", "Coconut", "Sugarcane", "GoliSoda", "Kulfi", "Milkshake", "Coffee", 
-        "TeaTime", "Biscuit", "Rusk", "Butter", "Cheese", "Popcorn", "Nacho", "Roll", 
-        "Sandwich", "Burger", "Pizza", "Noodle", "Pasta", "Momos", "SpringRoll", "Dumpling", 
-        "Choco", "Candy", "Toffee", "Caramel", "Vanilla", "Strawberry", "Blueberry", 
-        "Pineapple", "Orange", "Apple", "Grape"
+        "Punugulu", "Bobbatlu", "MirchiBajji", "Garelu", "Majjiga", "Sakinala", "Chekkalu", "Laddu", 
+        "Pulihora", "Bondalu", "Ariselu", "Sunnundalu", "KobbariLauzu", "Avakai", "MysoreBondam",
+        "Jilebi", "Murukku", "Boorelu", "KaramPusa", "Paalakova", "Pootharekulu", "Gongura",
+        "PappuChekka", "AtukulaUpma", "SamosaGadu", "ChaiBisket", "VadaPavGadu", "PeruguVada",
+        "Chikki", "MangoPachadi", "GoliSoda", "Panakam", "Payasam", "Badusha"
     ]
     suffixes = [
-        "Prince", "Macha", "Gamer", "Mood", "Boss", "Soul", "Champ", "Legend", "Joy", 
-        "Power", "Pal", "Dynamo", "Icon", "Vibes", "Charger", "Buddy", "Rider", "Joker", 
-        "Magic", "King", "Pro", "Ace", "Star", "Guy", "Ultra", "Hero", "Fan", "Ninja", 
-        "Dude", "Orbit"
+        "Mama", "Anna", "Thammudu", "Dosthu", "Vibes", "Gadu", "Soul", "Rider", "Boss",
+        "Power", "Icon", "Magic", "King", "Ace", "Star", "Ninja", "Dude", "Fan", "Dada"
     ]
     
     snack = random.choice(snacks)

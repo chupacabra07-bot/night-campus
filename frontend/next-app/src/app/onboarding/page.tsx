@@ -190,16 +190,11 @@ export default function OnboardingPage() {
             setFormData(prev => ({ ...prev, nickname: res.data.nickname }));
         } catch (err) {
             console.error("Nickname generation failed:", err);
-            // Fallback nicknames in case the API is unreachable (e.g. initial setup/mobile issues)
-            const fallbacks = ["Anonymous Ghost", "Shadow Walker", "Night Vibe", "Campus Legend", "Silent Echo"];
-            const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-            setFormData(prev => ({ ...prev, nickname: randomFallback }));
-
             setToast({
-                message: "Connected to local vibes (using fallback ID).",
+                message: "System jammed. Tap the icon to retry! 🔄",
                 visible: true
             });
-            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000);
+            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 4000);
         } finally {
             setIsGeneratingNickname(false);
         }
